@@ -153,4 +153,5 @@ This is the visual template for a single joint's controls. The builder script wi
 - **You Must Be in Play Mode:** The sliders will not work until you press the Play button. The `JointUIControlLinker` script only connects the sliders to the model when the game starts.  
 - **Disable the Model's Animator:** If your imported model has an Animator component, it will fight with your scripts for control of the bones. You must disable or remove the Animator component from the `SPML_male` model for the sliders to work.  
 - **Assign All Builder Fields:** The `JointUIBuilder` script will show an error if any of its public fields (Model Root, Prefab, etc.) are left empty. Double-check that all fields are assigned before generating.  
-- **UI Must Live in a Canvas:** All UI elements in Unity must be children of a Canvas object to be visible. Our setup using a Scroll View automatically handles this.  
+- **UI Must Live in a Canvas:** All UI elements in Unity must be children of a Canvas object to be visible. Our setup using a Scroll View automatically handles this.
+- **Verification using provided images:** If issues persist after all troubleshooting steps, refer to the images in the "Images of Settings" folder included in this repo.  
