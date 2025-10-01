@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Pose_SideKick
+  m_EditorClassIdentifier: Assembly-CSharp::PoseAsset
+  boneTransforms:
+  - boneName: pelvis
+    rotation: {x: 0, y: 0, z: -35}
+  - boneName: left_hip
+    rotation: {x: 0, y: 0, z: -45}
+  - boneName: left_knee
+    rotation: {x: 0, y: 0, z: -10}
+  - boneName: left_ankle
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: left_foot
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: right_hip
+    rotation: {x: 0, y: 0, z: 33}
+  - boneName: right_knee
+    rotation: {x: 20, y: 0, z: 0}
+  - boneName: right_ankle
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: right_foot
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: spine1
+    rotation: {x: 0, y: 0, z: -20}
+  - boneName: spine2
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: spine3
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: left_collar
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: left_shoulder
+    rotation: {x: 0, y: 0, z: 80}
+  - boneName: left_elbow
+    rotation: {x: 0, y: 0, z: 10}
+  - boneName: left_wrist
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: neck
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: head
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: jaw
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: right_collar
+    rotation: {x: 0, y: 0, z: 0}
+  - boneName: right_shoulder
+    rotation: {x: 0, y: 0, z: -77}
+  - boneName: right_elbow
+    rotation: {x: 0, y: 0, z: 20}
+  - boneName: right_wrist
+    rotation: {x: 0, y: 0, z: 0}
