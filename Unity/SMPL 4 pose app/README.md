@@ -130,7 +130,7 @@ This will automatically create the `Assets/Poses` folder and fill it with all th
 
 ## Customization: Using Images on Buttons  
 - Import your icon images into the project.  
-- Select an image → set **Texture Type = Sprite (2D and UI)** → click **Apply**.  
+- Select an image → set **Texture Type = Sprite (2D and UI)**, Sprite Mode = Single → click **Apply**.  
 - Select a button → expand it and delete its **Text** object.  
 - On the button object → in the **Image** component, drag your sprite into **Source Image**.  
 

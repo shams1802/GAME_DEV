@@ -85,7 +85,7 @@ This is the visual template for a single joint's controls. The builder script wi
 2. **Create a Scrollable Area:** Right-click on the Canvas → UI → Scroll View, rename it `JointControlsScrollView`. This ensures you can see all the generated controls even if they go off-screen.  
 3. **Create the Main Panel:** Right-click on the Content object (located under `ScrollView/Viewport/Content`) → UI → Panel. Rename this new panel to `JointControlUnit`.  
 4. **Add a Layout Group:** Select `JointControlUnit`. In the Inspector, click "Add Component" and add a `Layout Element`.  
-   - Set Layout Height = `80`  
+   - Set Preferred Height = `80`  
    - Set Layout Priority = `1`  
 5. **Add the Joint Label:** Right-click on `JointControlUnit` → UI → Text - TextMeshPro. Rename it `JointNameLabel`.  
    - In Rectangle Transform, set anchor preset to **centre middle**, W = `200`, H = `50`  
@@ -105,6 +105,7 @@ This is the visual template for a single joint's controls. The builder script wi
    - Drag `Slider_X` to the Slider X field.  
    - Drag `Slider_Y` to the Slider Y field.  
    - Drag `Slider_Z` to the Slider Z field.  
+   - Leave Controller Object Empty.  
 10. **Create the Prefab:** Drag the fully configured `JointControlUnit` object from the Hierarchy into your `Assets/Prefabs` folder. Once the icon in the Hierarchy turns blue, you can safely delete the `JointControlUnit` from the scene.  
 
 ---

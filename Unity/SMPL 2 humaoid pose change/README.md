@@ -29,7 +29,8 @@ Build fresh UI controls for the SMPL 2 humanoid pose change model.
 
 1. Keep the `_UI_BUILDER` GameObject selected.  
 2. Verify public fields in **Joint UI Builder** (e.g., `Model Root`, `UI Parent`) are correctly assigned for the new model.  
-3. Click **"Generate All Joint Controls"**.  
+3. Click reset located at 3 dots.  
+4. Click **"Generate All Joint Controls"**.  
    - The system inspects the model and populates the UI scroll view with appropriate sliders.  
 
 ---
