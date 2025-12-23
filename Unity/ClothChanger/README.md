@@ -22,92 +22,149 @@ The process is divided into two main parts: **asset creation in Blender** and **
 
 ### Blender
 - Create and sew a 3D garment around a character model.  
-- Configure cloth physics simulation and bake it.  
-- Export the final animated mesh as **Alembic (.abc)** with `Scale = 100`.  
+# Unity SMPL-X Cloth Switcher (Alembic)
 
-### Unity
-- Install the **Alembic package** via Package Manager.  
-- Import the character and `.abc` clothing files into the project.  
-- Use the **AlembicClothingChanger.cs** script to manage clothing swaps.  
-- Hook up a **UI Button** to trigger the clothing switch.  
+This Unity setup shows how to swap pre-baked cloth simulations on a character using Alembic animations and a simple UI button. Cloth motion is authored in Blender, baked, and exported as Alembic, then toggled in Unity at runtime.
 
 ---
 
-## 🚀 Setup & Usage Guide
+## 📑 Table of Contents
 
-### Step 1: Blender – Asset Preparation
-For each piece of clothing (e.g., `Shirt1`, `Shirt2`):  
-1. Finalize and **Bake** the cloth simulation.  
-2. Select the animated cloth object only.  
-3. Go to **File > Export > Alembic (.abc)**.  
-   - Enable **Selected Objects**.  
-   - Set **Scale = 100**.  
-4. Export each clothing item separately (`Shirt1.abc`, `Shirt2.abc`).  
+* [How It Works](#how-it-works)
+* [Getting Started: Project Setup](#getting-started-project-setup)
+
+  1. [Prerequisites](#1-prerequisites)
+  2. [Scene Preparation](#2-scene-preparation)
+
+* [Step-by-Step Implementation Guide](#step-by-step-implementation-guide)
+
+  * [Step 1: Blender – Bake and Export Alembic](#step-1-blender--bake-and-export-alembic)
+  * [Step 2: Unity – Install Alembic Package](#step-2-unity--install-alembic-package)
+  * [Step 3: Unity – Import Models and Alembic Files](#step-3-unity--import-models-and-alembic-files)
+  * [Step 4: Unity – Scene Setup](#step-4-unity--scene-setup)
+  * [Step 5: Unity – Controller Script](#step-5-unity--controller-script)
+  * [Step 6: Unity – UI Button Wiring](#step-6-unity--ui-button-wiring)
+
+* [Important Notes & Common Mistakes](#important-notes--common-mistakes)
 
 ---
 
-### Step 2: Unity – Project Setup
-1. Open **Window > Package Manager**.  
-2. Set the filter to **Unity Registry**.  
-3. Install the **Alembic package**.  
+## How It Works
+
+Blender handles the cloth simulation and bakes the motion. The baked mesh is exported as Alembic (`.abc`) with scale set for Unity. In Unity, an Alembic component (or script-driven player) drives the animated cloth meshes. A simple C# script swaps active Alembic instances when the UI button is pressed.
 
 ---
 
-### Step 3: Unity – Scene Setup
-1. Drag your character model and `.abc` clothing files into the **Project window**.  
-2. Create an empty **GameObject** called `GameController` for the script.  
-3. Suggested hierarchy structure: 
+## Getting Started: Project Setup
 
+### 1. Prerequisites
 
+- Unity project (2020.x or newer recommended) with a stable render pipeline and UI system available.
+- Alembic package installed from the Unity Registry so `.abc` files can be played back correctly.
+- Blender cloth simulations exported as Alembic with `Scale = 100` to maintain consistent world units.
+- A character rig in Unity to parent garments to (works for stationary or fully animated characters).
 
+### 2. Scene Preparation
 
+- Open the target Unity scene and ensure lighting/camera framing make garments clearly visible.
+- Confirm your character is present in the scene, using uniform scale `(1, 1, 1)` with transforms reset.
+- Verify TextMeshPro is imported so button labels render properly in the UI.
+
+---
+
+## Step-by-Step Implementation Guide
+
+### Step 1: Blender – Bake and Export Alembic
+
+- Finalize and **Bake** the cloth simulation for each garment (e.g., `Shirt1`, `Shirt2`) to capture motion deterministically.
+- Select only the animated cloth object prior to export to avoid bundling unintended meshes.
+- Use File → Export → **Alembic (.abc)** with:
+   - **Selected Objects** enabled so only the cloth exports
+   - **Scale = 100** to match Unity’s default unit scale
+- Export each garment to its own file (e.g., `Shirt1.abc`, `Shirt2.abc`) for modular swapping in Unity.
+
+### Step 2: Unity – Install Alembic Package
+
+- Open Window → Package Manager and switch scope to **Unity Registry**.
+- Install **Alembic** so Unity can import and play `.abc` animation caches reliably.
+
+### Step 3: Unity – Import Models and Alembic Files
+
+- Drag the character FBX and all `.abc` garments into the Project to register assets.
+- Check Alembic import settings (time range, normals, topology) and adjust if playback or shading appears incorrect.
+
+### Step 4: Unity – Scene Setup
+
+- Create an empty GameObject named `GameController` to host the switching script.
+- Use a tidy hierarchy to keep character and garments organized:
 
 ```plaintext
-
 Model (Parent Object)/
-   ├── Ch36 (Character\_Body\_Mesh)
-   └── mixamorig1:Hips(Armature)
+   ├── Ch36 (Character_Body_Mesh)
+   └── mixamorig1:Hips (Armature)
 Shirt1
 Shirt2
 GameController
 Canvas
    └── Button
-
 ```
 
+- Parent garments to the character rig (or relevant bone) if the character is animated so cloth follows the skeleton during playback.
 
+### Step 5: Unity – Controller Script
 
+- Create a C# script `AlembicClothingChanger` (or use the provided `AlembicClothingChanger.cs`).
+- Attach the script to `GameController` so it is easy to find and manage.
+- In the Inspector, assign garment references clearly:
+   - `Shirt Player` → `Shirt1`
+   - `Jacket Player` → `Shirt2`
 
----
+### Step 6: Unity – UI Button Wiring
 
-### Step 4: Unity – Controller Script
-1. In Project, right-click → **Create > C# Script** → name it `AlembicClothingChanger`.  
-2. Paste the script (from `AlembicClothingChanger.cs`).  
-3. Attach it to `GameController`.  
-4. In the Inspector:  
-   - Assign **Shirt1** to `Shirt Player`.  
-   - Assign **Shirt2** to `Jacket Player`.  
+- Right-click Hierarchy → UI → **Button - TextMeshPro** (this auto-creates a Canvas and EventSystem if missing).
+- Select the Button and configure **On Click()** events:
+   - Click **+** to add a new event
+   - Drag `GameController` into the object slot
+   - Choose `AlembicClothingChanger → SwitchClothing()` from the dropdown
 
----
-
-### Step 5: Unity – UI Button Setup
-1. Right-click in Hierarchy → **UI > Button - TextMeshPro**.  
-   - This creates a **Canvas**, **EventSystem**, and **Button**.  
-2. Select the Button → In Inspector → **On Click()** panel.  
-3. Add a new event (+).  
-4. Drag `GameController` into the slot.  
-5. From the dropdown, choose:  
-   `AlembicClothingChanger > SwitchClothing()`  
-
-✅ Now press **Play** and test the button.  
+✅ Press **Play** and test the switch.
 
 ---
 
-## ⚡ Troubleshooting
-- **Clothes are tiny** → Forgot to set **Scale = 100** during Blender export.  
-- **Animation doesn’t play** → Ensure **Alembic package** is installed and script is updating animation time.  
-- **Button does nothing** →  
-  - Verify OnClick is linked to `SwitchClothing()`.  
-  - Ensure **EventSystem** exists in the scene.  
+## Important Notes & Common Mistakes
+
+### ❌ Clothes import tiny
+
+*Cause:* Alembic exported without **Scale = 100**.
+
+*Fix:* Re-export from Blender with `Scale = 100` and re-import.
 
 ---
+
+### ❌ Animation not playing
+
+*Cause:* Alembic package missing or player not updating time.
+
+*Fix:* Install the Alembic package; ensure the Alembic component is active and time is driven (by player or script).
+
+---
+
+### ❌ Button does nothing
+
+*Cause:* OnClick not wired or no EventSystem.
+
+*Fix:* Re-link OnClick to `SwitchClothing()` and confirm EventSystem exists.
+
+---
+
+### ❌ Garments not following the character
+
+*Cause:* Cloth objects not parented/aligned to the rig.
+
+*Fix:* Parent garments under the character rig and match transforms before Play.
+
+---
+
+## Final Result
+
+After setup, a single UI button swaps between Alembic-baked garments at runtime, retaining high-fidelity cloth motion while the character remains stationary or animated.
